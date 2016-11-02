@@ -5,9 +5,11 @@ const path = require('path');
 const server = require('socket.io');
 const httpProxy = require('http-proxy');
 const Docker = require('dockerode');
+const pkg = require('./package.json');
 
 const SocketStream = require('./lib/socketStream');
 const sse = require('./lib/events');
+const networkInterfaces = require('./lib/networkInterfaces')();
 
 const sock = process.env.DOCKER_SOCK || '/var/run/docker.sock';
 const docker = new Docker({socketPath: sock});
@@ -19,8 +21,16 @@ app.use(cors());
 // app.use(express.static(path.join(__dirname, 'terminal')));
 app.use(express.static(path.join(__dirname, '..', 'www')));
 
+app.get('/', (req, res) => {
+  res.send(`Gorae Server v${pkg.version} - Hello World!`);
+});
+
+app.get('/networkInterfaces', (req, res) => {
+  res.json(networkInterfaces);
+});
+
 app.all('/api/*', (req, res) => {
-  console.log('call docker api');
+  console.log('[%s]: %s %s', new Date(), req.method, req.url);
   req.url = req.url.replace('/api', '');
 
   if (req.url === '/events') {
@@ -35,9 +45,11 @@ app.all('/api/*', (req, res) => {
   });
 });
 
-// app.get('/api/events', sse);
+const httpServer = http.createServer(app).listen(process.env.PORT || 8082);
 
-const httpServer = http.createServer(app).listen(process.env.PORT || 8081);
+/**
+ * @TODO split from inex.js to module
+ */
 const sockServer = server(httpServer, { path: '/wetty/socket.io' });
 
 sockServer.on('connection', socket => {
