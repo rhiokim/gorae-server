@@ -9,6 +9,7 @@ const socketServer = require('./lib/socketServer');
 
 const app = express();
 app.use(cors());
+app.use(express.static(path.join(__dirname, '..', 'terminal')));
 app.use(express.static(path.join(__dirname, '..', 'www')));
 
 app.use('/utils', utils);

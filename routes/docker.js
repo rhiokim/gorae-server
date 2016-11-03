@@ -22,10 +22,14 @@ router.use((req, res, next) => {
 router.use((req, res, next) => {
   if (req.url === '/events') {
     sse(req, res);
+    return;
   }
+
+  next();
 });
 
 router.all('/*', (req, res) => {
+  console.log('router.all')
   proxy.web(req, res, {
     target: {
       socketPath: sock
