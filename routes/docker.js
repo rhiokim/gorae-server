@@ -1,11 +1,9 @@
 const httpProxy = require('http-proxy');
-const Docker = require('dockerode');
 const express = require('express');
 
 const sse = require('../lib/events');
 
 const sock = process.env.DOCKER_SOCK || '/var/run/docker.sock';
-const docker = new Docker({socketPath: sock});
 const proxy = new httpProxy.createProxyServer();
 const router = express.Router();
 
@@ -29,7 +27,6 @@ router.use((req, res, next) => {
 });
 
 router.all('/*', (req, res) => {
-  console.log('router.all')
   proxy.web(req, res, {
     target: {
       socketPath: sock

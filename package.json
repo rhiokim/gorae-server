@@ -1,6 +1,6 @@
 {
   "name": "gorae-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "docker remote api proxy",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "express": "^4.14.0",
     "express-ws": "^2.0.0-rc.1",
     "http-proxy": "^1.14.0",
+    "json-store": "0.0.1",
     "socket.io": "^1.4.8"
   },
   "devDependencies": {
