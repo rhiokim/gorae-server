@@ -5,6 +5,7 @@ const path = require('path');
 
 const utils = require('./routes/utils');
 const docker = require('./routes/docker');
+const gorae = require('./routes/gorae');
 const socketServer = require('./lib/socketServer');
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, '..', 'www')));
 
 app.use('/utils', utils);
 app.use('/api', docker);
+app.use('/gorae', gorae);
 
 const httpServer = http.createServer(app).listen(process.env.PORT || 8082);
 socketServer(httpServer);
