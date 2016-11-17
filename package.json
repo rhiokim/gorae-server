@@ -27,6 +27,7 @@
     "socket.io": "^1.5.1"
   },
   "devDependencies": {
+    "express-routemap": "^1.0.2",
     "server-sent-events": "^1.0.0"
   }
 }

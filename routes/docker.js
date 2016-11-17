@@ -1,16 +1,17 @@
 const httpProxy = require('http-proxy');
 const express = require('express');
 
+const proxyTarget = require('../lib/proxyTarget');
 const sse = require('../lib/events');
 
 // process.env['DOCKER_HOST'] = 'tcp://192.168.99.116:2376';
-const dockerHost = process.env['DOCKER_HOST'];
-const sock = process.env.DOCKER_SOCK || '/var/run/docker.sock';
+// const dockerHost = process.env['DOCKER_HOST'];
+// const sock = process.env.DOCKER_SOCK || '/var/run/docker.sock';
 
 const proxy = new httpProxy.createProxyServer();
-const proxyTarget = dockerHost
-  ? { target: dockerHost.replace('tcp', 'http') }
-  : { target: { socketPath: sock } };
+// const proxyTarget = dockerHost
+//   ? { target: dockerHost.replace('tcp', 'http') }
+//   : { target: { socketPath: sock } };
 const router = express.Router();
 
 router.use((req, res, next) => {
