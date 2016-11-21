@@ -17,6 +17,7 @@
     "JSONStream": "^1.2.1",
     "bluebird": "^3.4.6",
     "cors": "^2.8.1",
+    "diskusage": "^0.1.5",
     "dockerode": "^2.3.1",
     "event-stream": "^3.3.4",
     "express": "^4.14.0",

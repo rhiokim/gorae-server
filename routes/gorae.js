@@ -21,8 +21,8 @@ router.get('/', (req, res) => {
     docker('get', '/tasks'),
     docker('get', '/containers/json'),
     docker('get', '/images/json'),
-    docker('get', '/networks'),
-    docker('get', '/volumes'),
+    // docker('get', '/networks'),
+    // docker('get', '/volumes'),
   ])
     .then(responses => {
       res.json({
@@ -31,8 +31,8 @@ router.get('/', (req, res) => {
         tasks: responses[2].body.length,
         containers: responses[3].body.length,
         images: responses[4].body.length,
-        networks: responses[5].body.length,
-        volumes: responses[6].body.length,
+        // networks: responses[5].body.length,
+        // volumes: responses[6].body.length,
       })
     })
     .catch(error => {
@@ -41,6 +41,13 @@ router.get('/', (req, res) => {
     });
 });
 
+let tid, prev;
+const interval = res => {
+  const curr = processUsage();
+  res.write(`data: ${JSON.stringify({curr: curr, prev: prev})}\n\n`);
+  prev = curr;
+
+}
 router.get('/process', (req, res) => {
   res.set({
     'Content-Type': 'text/event-stream',
@@ -48,7 +55,12 @@ router.get('/process', (req, res) => {
     'Connection': 'keep-alive'
   });
 
-  setInterval(() => res.write(`data: ${JSON.stringify(processUsage())}\n\n`), 1000)
+  const intervalTime = req.query.interval || 5000;
+  clearInterval(tid);
+  interval(res);
+  tid = setInterval(() => {
+    interval(res);
+  }, intervalTime);
 })
 
 module.exports = router;
