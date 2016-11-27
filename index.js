@@ -7,6 +7,7 @@ const displayRoutes = require('express-routemap');
 const utils = require('./routes/utils');
 const docker = require('./routes/docker');
 const gorae = require('./routes/gorae');
+const registry = require('./routes/registry');
 const socketServer = require('./lib/socketServer');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, '..', 'www')));
 app.use('/utils', utils);
 app.use('/api', docker);
 app.use('/gorae', gorae);
+app.use('/registry', registry);
 
 const httpServer = http.createServer(app).listen(process.env.PORT || 8082, () => {
   displayRoutes(app);
