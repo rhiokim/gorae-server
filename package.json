@@ -24,7 +24,9 @@
     "got": "^6.6.3",
     "http-proxy": "^1.15.2",
     "json-store": "0.0.1",
-    "socket.io": "^1.5.1"
+    "mkdirp": "^0.5.1",
+    "socket.io": "^1.5.1",
+    "ssh-keygen": "^0.4.1"
   },
   "devDependencies": {
     "express-routemap": "^1.0.2",

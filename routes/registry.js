@@ -1,6 +1,7 @@
 const httpProxy = require('http-proxy');
 const express = require('express');
 
+const keygen = require('./registry/ssh-keygen');
 const sse = require('../lib/events');
 
 const REGISTRY_HOST = process.env.REGISTRY_HOST || 'localhost';
@@ -17,6 +18,13 @@ router.use((req, res, next) => {
 router.use((req, res, next) => {
   req.url = req.url.replace('/registry', '');
   next();
+});
+
+router.get('/ssh-keygen', (req, res) => {
+  keygen(req.query.author, '')
+    .then(out => {
+      res.json({pubKey: out.pubKey});
+    })
 });
 
 router.all('/*', (req, res) => {
