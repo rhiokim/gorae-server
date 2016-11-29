@@ -3,6 +3,9 @@ const express = require('express');
 
 const sse = require('../lib/events');
 
+const REGISTRY_HOST = process.env.REGISTRY_HOST || 'localhost';
+const REGISTRY_PORT = process.env.REGISTRY_PORT || 5000;
+
 const proxy = new httpProxy.createProxyServer();
 const router = express.Router();
 
@@ -18,7 +21,7 @@ router.use((req, res, next) => {
 
 router.all('/*', (req, res) => {
   proxy.web(req, res, {
-    target: 'http://localhost:5000/v2'
+    target: `http://${REGISTRY_HOST}:${REGISTRY_PORT}/v2`
   });
 });
 
