@@ -1,3 +1,9 @@
+### Endpoints
+
+- `/api`: docker related APIs
+- `/registry`: docker image registry related APIs
+- `/utils`: system related APIs (Network Interfaces)
+- `/gorae`: system related APIs (System Resources)
 
 ### Run with remote docker host
 
