@@ -20,8 +20,8 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/ssh-keygen', (req, res) => {
-  keygen(req.query.author, '')
+router.post('/ssh-keygen/:author', (req, res) => {
+  keygen(req.params.author, '')
     .then(out => {
       res.json({pubKey: out.pubKey});
     })
