@@ -1,0 +1,17 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "ecmaFeatures": {
+    "modules": true,
+    "destructuring": true
+  },
+  "globals": {
+  },
+  "plugins": [],
+  "extends": ["standard"],
+  "rules": {
+    "object-property-newline": "off"
+  }
+}

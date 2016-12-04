@@ -1,0 +1,5 @@
+node_modules/**
+terminal/**
+**/*.css
+**/*.html
+src/**/*-test.js

@@ -1,26 +1,26 @@
-const express = require('express');
-const cors = require('cors');
-const http = require('http');
-const path = require('path');
-const displayRoutes = require('express-routemap');
+const express = require('express')
+const cors = require('cors')
+const http = require('http')
+const path = require('path')
+const displayRoutes = require('express-routemap')
 
-const utils = require('./routes/utils');
-const docker = require('./routes/docker');
-const gorae = require('./routes/gorae');
-const registry = require('./routes/registry');
-const socketServer = require('./lib/socketServer');
+const utils = require('./routes/utils')
+const docker = require('./routes/docker')
+const gorae = require('./routes/gorae')
+const registry = require('./routes/registry')
+const socketServer = require('./lib/socketServer')
 
-const app = express();
-app.use(cors());
-app.use(express.static(path.join(__dirname, '..', 'terminal')));
-app.use(express.static(path.join(__dirname, '..', 'www')));
+const app = express()
+app.use(cors())
+app.use(express.static(path.join(__dirname, '..', 'terminal')))
+app.use(express.static(path.join(__dirname, '..', 'www')))
 
-app.use('/utils', utils);
-app.use('/api', docker);
-app.use('/gorae', gorae);
-app.use('/registry', registry);
+app.use('/utils', utils)
+app.use('/api', docker)
+app.use('/gorae', gorae)
+app.use('/registry', registry)
 
 const httpServer = http.createServer(app).listen(process.env.PORT || 8082, () => {
-  displayRoutes(app);
-});
-socketServer(httpServer);
+  displayRoutes(app)
+})
+socketServer(httpServer)

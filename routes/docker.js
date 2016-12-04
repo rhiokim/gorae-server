@@ -1,40 +1,40 @@
-const httpProxy = require('http-proxy');
-const express = require('express');
+const HttpProxy = require('http-proxy').createProxyServer
+const express = require('express')
 
-const proxyTarget = require('../lib/proxyTarget');
-const sse = require('../lib/events');
+const proxyTarget = require('../lib/proxyTarget')
+const sse = require('../lib/events')
 
-// process.env['DOCKER_HOST'] = 'tcp://192.168.99.116:2376';
-// const dockerHost = process.env['DOCKER_HOST'];
-// const sock = process.env.DOCKER_SOCK || '/var/run/docker.sock';
+// process.env['DOCKER_HOST'] = 'tcp://192.168.99.116:2376'
+// const dockerHost = process.env['DOCKER_HOST']
+// const sock = process.env.DOCKER_SOCK || '/var/run/docker.sock'
 
-const proxy = new httpProxy.createProxyServer();
+const proxy = new HttpProxy()
 // const proxyTarget = dockerHost
 //   ? { target: dockerHost.replace('tcp', 'http') }
-//   : { target: { socketPath: sock } };
-const router = express.Router();
+//   : { target: { socketPath: sock } }
+const router = express.Router()
 
 router.use((req, res, next) => {
-  console.log('[%s]: %s %s', new Date(), req.method, req.url);
-  next();
-});
+  console.log('[%s]: %s %s', new Date(), req.method, req.url)
+  next()
+})
 
 router.use((req, res, next) => {
-  req.url = req.url.replace('/api', '');
-  next();
-});
+  req.url = req.url.replace('/api', '')
+  next()
+})
 
 router.use((req, res, next) => {
   if (req.url === '/events' && !req.query.since && !req.query.until) {
-    sse(req, res);
-    return;
+    sse(req, res)
+    return
   }
 
-  next();
-});
+  next()
+})
 
 router.all('/*', (req, res) => {
-  proxy.web(req, res, proxyTarget);
-});
+  proxy.web(req, res, proxyTarget)
+})
 
-module.exports = router;
+module.exports = router
