@@ -1,4 +1,4 @@
-# ![](assets/image/gorae-github-banner.png)
+# [![](media/gorae-github-banner.png)](https://github.com/rhiokim/gorae-server)
 
 ### Endpoints
 
